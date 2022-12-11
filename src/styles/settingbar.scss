@@ -1,6 +1,6 @@
 @import "./variables";
 
-.toolbar {
+.settingbar {
     height: $toolbar-height;
     background-color: white;
     display: flex;
@@ -8,5 +8,6 @@
     position: absolute;
     width: 100%;
     box-shadow: 0 4px 5px gray;
-    z-index: 1;
+    top: $toolbar-height;
 }
+
