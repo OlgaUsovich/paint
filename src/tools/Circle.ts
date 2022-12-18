@@ -1,6 +1,6 @@
 import { Tool } from "./Tool";
 
-export class Rect extends Tool {
+export class Circle extends Tool {
   startX: number;
   startY: number;
   saved: any;
@@ -35,19 +35,19 @@ export class Rect extends Tool {
       let currentY = e.pageY - e.target.offsetTop;
       let width = currentX - this.startX;
       let height = currentY - this.startY;
-      this.draw(this.startX, this.startY, width, height);
+      let r = Math.sqrt(width**2 + height**2)
+      this.draw(this.startX, this.startY, r);
     }
   }
 
-  draw(x: Number, y: Number, w: Number, h: Number) {
+  draw(x: number, y: number, r: number) {
     const img = new Image();
     img.src = this.saved;
     img.onload = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
       this.ctx.beginPath();
-      this.ctx.rect(x, y, w, h);
-      this.ctx.fill();
+      this.ctx.arc(x, y, r, 0, 2 * Math.PI);
       this.ctx.stroke();
     };
   }
