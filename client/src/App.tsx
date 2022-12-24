@@ -20,7 +20,7 @@ const App = () => {
               </>
             }
           />
-          <Route element={<Navigate to={`f${(+new Date()).toString(16)}`} />}/>
+          <Route path="/" element={<Navigate to={`f${(+new Date()).toString(16)}`} />}/>
         </Routes>
       </div>
     </BrowserRouter>
