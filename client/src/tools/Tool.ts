@@ -2,7 +2,12 @@ export class Tool {
   canvas: any;
   ctx: any;
   mouseDown: any;
-  constructor(canvas: any) {
+  socket: any;
+  id: string;
+  
+  constructor(canvas: any, socket: any, id: string) {
+    this.socket = socket;
+    this.id = id;
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.destroyEvents();

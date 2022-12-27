@@ -1,8 +1,8 @@
 import { Tool } from "./Tool";
 
 export class Brush extends Tool {
-  constructor(canvas: any) {
-    super(canvas);
+  constructor(canvas: any, socket: any, id: any) {
+    super(canvas, socket, id);
     this.listen();
   }
 
@@ -27,12 +27,23 @@ export class Brush extends Tool {
 
   mouseMoveHandler(e: any) {
     if (this.mouseDown) {
-      this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+      // this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+      this.socket.send(
+        JSON.stringify({
+          method: "draw",
+          id: this.id,
+          figure: {
+            type: 'brush',
+            x: e.pageX - e.target.offsetLeft,
+            y: e.pageY - e.target.offsetTop
+          },
+        })
+      );
     }
   }
 
-  draw(x: Number, y: Number) {
-    this.ctx.lineTo(x, y);
-    this.ctx.stroke();
+  static draw(ctx: any, x: Number, y: Number) {
+    ctx.lineTo(x, y);
+    ctx.stroke();
   }
 }
