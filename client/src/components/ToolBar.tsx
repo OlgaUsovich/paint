@@ -18,13 +18,13 @@ export const ToolBar = () => {
       <button
         className="toolbar__btn brush"
         onClick={() => {
-          toolState.setTool(new Brush(canvasState.canvas));
+          toolState.setTool(new Brush(canvasState.canvas, canvasState.socket, canvasState.sessionid));
         }}
       ></button>
       <button
         className="toolbar__btn rect"
         onClick={() => {
-          toolState.setTool(new Rect(canvasState.canvas));
+          toolState.setTool(new Rect(canvasState.canvas, canvasState.socket, canvasState.sessionid));
         }}
       ></button>
       <button

@@ -6,6 +6,7 @@ import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
 import "../styles/canvas.scss";
 import { Brush } from "../tools/Brush";
+import { Rect } from "../tools/Rect";
 
 export const Canvas = observer(() => {
   const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
@@ -53,6 +54,12 @@ export const Canvas = observer(() => {
     switch (figure.type) {
       case "brush":
         Brush.draw(ctx, figure.x, figure.y)
+        break;
+      case "rect":
+        Rect.staticDraw(ctx, figure.x, figure.y, figure.width, figure.height, figure.color)
+        break;
+      case "finish":
+        ctx?.beginPath();
         break;
     }
   }
