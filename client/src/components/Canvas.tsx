@@ -1,3 +1,4 @@
+import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
@@ -16,6 +17,16 @@ export const Canvas = observer(() => {
 
   useEffect(() => {
     canvasState.setCanvas(canvasRef.current);
+    axios
+      .get(`http://localhost:5000/image?id=${params.id}`)
+      .then((response) => {
+        const img = new Image();
+        img.src = response.data;
+        img.onload = () => {
+          this.ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          this.ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        };
+      });
   }, []);
 
   useEffect(() => {
@@ -49,20 +60,27 @@ export const Canvas = observer(() => {
   }, [canvasState.username]);
 
   const drawHandler = (msg: any) => {
-    const figure = msg.figure
-    const ctx = canvasRef.current.getContext('2d');
+    const figure = msg.figure;
+    const ctx = canvasRef.current.getContext("2d");
     switch (figure.type) {
       case "brush":
-        Brush.draw(ctx, figure.x, figure.y)
+        Brush.draw(ctx, figure.x, figure.y);
         break;
       case "rect":
-        Rect.staticDraw(ctx, figure.x, figure.y, figure.width, figure.height, figure.color)
+        Rect.staticDraw(
+          ctx,
+          figure.x,
+          figure.y,
+          figure.width,
+          figure.height,
+          figure.color
+        );
         break;
       case "finish":
         ctx?.beginPath();
         break;
     }
-  }
+  };
 
   const mouseDownHandler = () => {
     canvasState.pushToUndo(canvasRef.current.toDataURL());
@@ -71,6 +89,14 @@ export const Canvas = observer(() => {
   const connectHandler = () => {
     canvasState.setUsername(usernameRef.current.value);
     setModal(false);
+  };
+
+  const mouseUpHandler = () => {
+    axios
+      .post(`http://localhost:5000/image?id=${params.id}`, {
+        img: canvasState.canvas.toDataURL(),
+      })
+      .then((response) => console.log(response));
   };
 
   return (
@@ -90,6 +116,7 @@ export const Canvas = observer(() => {
       </Modal>
       <canvas
         onMouseDown={() => mouseDownHandler()}
+        onMouseUp={() => mouseUpHandler()}
         ref={canvasRef}
         width={800}
         height={500}
