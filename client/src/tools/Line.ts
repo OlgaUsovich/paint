@@ -7,8 +7,8 @@ export default class Line extends Tool {
     currentX: number | undefined;
     currentY: number | undefined;
     saved: any;
-    constructor(canvas: any) {
-        super(canvas);
+    constructor(canvas: any, socket: any, id: any) {
+        super(canvas, socket, id);
         this.listen()
         this.name = 'Line'
     }

@@ -4,8 +4,8 @@ export class Circle extends Tool {
   startX: number;
   startY: number;
   saved: any;
-  constructor(canvas: any) {
-    super(canvas);
+  constructor(canvas: any, socket: any, id: any) {
+    super(canvas, socket, id);
     this.listen();
     this.startX = 0;
     this.startY = 0;
