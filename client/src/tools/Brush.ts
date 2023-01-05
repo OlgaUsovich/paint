@@ -44,7 +44,9 @@ export class Brush extends Tool {
           figure: {
             type: 'brush',
             x: e.pageX - e.target.offsetLeft,
-            y: e.pageY - e.target.offsetTop
+            y: e.pageY - e.target.offsetTop,
+            color: this.ctx.fillStyle,
+            lineWidth: this.ctx.lineWidth,
           },
         })
       );

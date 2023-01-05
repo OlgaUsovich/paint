@@ -6,7 +6,7 @@ export const SettingBar = () => {
     <div className="settingbar">
       <label htmlFor="line-width">Line width</label>
       <input
-        onChange={(e) => toolState.setLineWIdth(e.target.value)}
+        onChange={(e) => toolState.setLineWidth(e.target.value)}
         id="line-width"
         style={{ margin: "0 10px" }}
         type="number"

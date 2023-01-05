@@ -76,7 +76,9 @@ export const Canvas = observer(() => {
           figure.y,
           figure.width,
           figure.height,
-          figure.color
+          figure.color,
+          figure.strokeColor,
+          figure.lineWidth
         );
         break;
       case "finish":

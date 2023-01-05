@@ -23,7 +23,7 @@ class ToolState {
     }
   }
 
-  setLineWIdth(width: any) {
+  setLineWidth(width: any) {
     if (this.tool) {
       this.tool.lineWidth = width;
     }
