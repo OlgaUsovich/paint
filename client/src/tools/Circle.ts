@@ -4,6 +4,7 @@ export class Circle extends Tool {
   startX: number;
   startY: number;
   saved: any;
+  r: any;
   constructor(canvas: any, socket: any, id: any) {
     super(canvas, socket, id);
     this.listen();
@@ -19,6 +20,21 @@ export class Circle extends Tool {
 
   mouseUpHandler(e: any) {
     this.mouseDown = false;
+    this.socket.send(
+      JSON.stringify({
+        method: "draw",
+        id: this.id,
+        figure: {
+          type: 'circle',
+          x: this.startX,
+          y: this.startY,
+          r: this.r,
+          color: this.ctx.fillStyle,
+          strokeColor: this.ctx.strokeStyle,
+          lineWidth: this.ctx.lineWidth,
+        },
+      })
+    );
   }
 
   mouseDownHandler(e: any) {
@@ -35,8 +51,8 @@ export class Circle extends Tool {
       let currentY = e.pageY - e.target.offsetTop;
       let width = currentX - this.startX;
       let height = currentY - this.startY;
-      let r = Math.sqrt(width**2 + height**2)
-      this.draw(this.startX, this.startY, r);
+      this.r = Math.sqrt(width**2 + height**2)
+      this.draw(this.startX, this.startY, this.r);
     }
   }
 
@@ -48,7 +64,18 @@ export class Circle extends Tool {
       this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
       this.ctx.beginPath();
       this.ctx.arc(x, y, r, 0, 2 * Math.PI);
+      this.ctx.fill();
       this.ctx.stroke();
     };
+  }
+
+  static staticDraw(ctx: any, x: number, y: number, r: number, color: any, strokeColor: any, lineWidth: any) {
+    ctx.strokeStyle = strokeColor;
+    ctx.fillStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
   }
 }

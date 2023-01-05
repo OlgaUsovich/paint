@@ -7,6 +7,7 @@ import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
 import "../styles/canvas.scss";
 import { Brush } from "../tools/Brush";
+import { Circle } from "../tools/Circle";
 import { Rect } from "../tools/Rect";
 
 export const Canvas = observer(() => {
@@ -76,6 +77,17 @@ export const Canvas = observer(() => {
           figure.y,
           figure.width,
           figure.height,
+          figure.color,
+          figure.strokeColor,
+          figure.lineWidth
+        );
+        break;
+      case "circle":
+        Circle.staticDraw(
+          ctx,
+          figure.x,
+          figure.y,
+          figure.r,
           figure.color,
           figure.strokeColor,
           figure.lineWidth
