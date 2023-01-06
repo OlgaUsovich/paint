@@ -8,6 +8,7 @@ import toolState from "../store/toolState";
 import "../styles/canvas.scss";
 import { Brush } from "../tools/Brush";
 import { Circle } from "../tools/Circle";
+import Eraser from "../tools/Eraser";
 import { Rect } from "../tools/Rect";
 
 export const Canvas = observer(() => {
@@ -69,6 +70,9 @@ export const Canvas = observer(() => {
     switch (figure.type) {
       case "brush":
         Brush.draw(ctx, figure.x, figure.y);
+        break;
+      case "eraser":
+        Eraser.draw(ctx, figure.x, figure.y);
         break;
       case "rect":
         Rect.staticDraw(
